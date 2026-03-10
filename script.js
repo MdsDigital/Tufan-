@@ -1,136 +1,130 @@
-class OmniEliteApp {
-    constructor() {
-        this.cart = [];
-        this.services = [
-            { id: 1, name: 'تطبيق جوال متكامل', price: 2500, cat: 'برمجة', icon: 'fa-mobile-screen' },
-            { id: 2, name: 'هوية تجارية (لوغو)', price: 600, cat: 'تصميم', icon: 'fa-bezier-curve' },
-            { id: 3, name: 'متجر إلكتروني Salla', price: 1200, cat: 'برمجة', icon: 'fa-shopping-bag' },
-            { id: 4, name: 'إدارة حملات إعلانية', price: 800, cat: 'تسويق', icon: 'fa-ad' }
-        ];
-        this.init();
-    }
+/**
+ * OMNI-TASK PRO ENGINE v5.0
+ * Structured, Modular, and Secure
+ */
 
-    init() {
-        this.renderServices('all');
-        this.setupSignature();
-        this.hideLoader();
-        console.log("Omni-Task Elite Engine Started...");
-    }
+// 1. Database Mockup
+const DB = {
+    services: [
+        { id: 's1', title: 'برمجيات الـ ERP السحابية', price: 4500, cat: 'dev', icon: 'fa-server' },
+        { id: 's2', title: 'تطوير تطبيقات FinTech', price: 3200, cat: 'dev', icon: 'fa-mobile-v' },
+        { id: 's3', title: 'هوية بصرية للشركات', price: 850, cat: 'design', icon: 'fa-pen-fancy' },
+        { id: 's4', title: 'واجهات UI/UX معقدة', price: 1500, cat: 'design', icon: 'fa-wand-magic-sparkles' }
+    ]
+};
 
-    hideLoader() {
-        setTimeout(() => document.getElementById('loader').style.opacity = '0', 1000);
-        setTimeout(() => document.getElementById('loader').style.display = 'none', 1500);
-    }
-
-    showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+// 2. Navigation Logic
+const Router = {
+    go(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
         
-        document.querySelectorAll('.nav-links li').forEach(l => {
-            l.classList.toggle('active', l.dataset.page === id);
+        document.querySelectorAll('.nav-links button').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('onclick').includes(viewId));
         });
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
-    renderServices(filter) {
-        const container = document.getElementById('services-container');
-        const filtered = filter === 'all' ? this.services : this.services.filter(s => s.cat === filter);
         
-        container.innerHTML = filtered.map(s => `
-            <div class="service-card">
-                <div style="font-size: 2.5rem; color: var(--s); margin-bottom: 15px;"><i class="fas ${s.icon}"></i></div>
-                <h3>${s.name}</h3>
-                <p>تنفيذ احترافي بواسطة خبراء Omni-Task.</p>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:25px">
-                    <span style="font-size: 1.5rem; font-weight: 900;">$${s.price}</span>
-                    <button class="btn-main" style="padding: 10px 20px" onclick="app.addToCart(${s.id})">أضف للسلة</button>
-                </div>
+        if(viewId === 'cart') Sign.init();
+        window.scrollTo(0,0);
+    }
+};
+
+// 3. Cart System
+const Cart = {
+    items: [],
+    
+    add(id) {
+        const product = DB.services.find(s => s.id === id);
+        this.items.push(product);
+        this.sync();
+        UI.notify(`تمت إضافة ${product.title} إلى السلة`);
+    },
+    
+    sync() {
+        document.getElementById('cart-counter').textContent = this.items.length;
+        const total = this.items.reduce((acc, curr) => acc + curr.price, 0);
+        document.getElementById('grand-total').textContent = `$${total.toLocaleString()}`;
+        
+        const list = document.getElementById('cart-list-pro');
+        list.innerHTML = this.items.map((item, idx) => `
+            <div class="cart-row">
+                <span>${item.title}</span>
+                <b>$${item.price}</b>
             </div>
         `).join('');
     }
+};
 
-    addToCart(id) {
-        const item = this.services.find(s => s.id === id);
-        this.cart.push(item);
-        this.updateUI();
-        this.toast(`تمت إضافة ${item.name} بنجاح`);
-    }
-
-    updateUI() {
-        document.getElementById('cart-badge').textContent = this.cart.length;
-        const total = this.cart.reduce((sum, i) => sum + i.price, 0);
-        document.getElementById('final-price').textContent = `$${total}`;
+// 4. Signature Logic (Advanced)
+const Sign = {
+    init() {
+        this.canvas = document.getElementById('pad');
+        this.ctx = this.canvas.getContext('2d');
+        this.isDrawing = false;
         
-        const list = document.getElementById('cart-list');
-        list.innerHTML = this.cart.map((i, idx) => `
-            <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid var(--border)">
-                <span>${i.name}</span>
-                <b>$${i.price}</b>
+        // Match canvas size to container
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
+        
+        this.ctx.strokeStyle = '#2563eb';
+        this.ctx.lineWidth = 3;
+        this.ctx.lineCap = 'round';
+
+        this.canvas.onmousedown = (e) => { this.isDrawing = true; this.ctx.beginPath(); this.ctx.moveTo(e.offsetX, e.offsetY); };
+        this.canvas.onmousemove = (e) => { if(this.isDrawing) { this.ctx.lineTo(e.offsetX, e.offsetY); this.ctx.stroke(); } };
+        window.onmouseup = () => this.isDrawing = false;
+    },
+    clear() {
+        this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+    }
+};
+
+// 5. Order Management
+const Order = {
+    process() {
+        const name = document.getElementById('user-name').value;
+        if(!name || Cart.items.length === 0) {
+            UI.notify("يرجى إكمال البيانات واختيار الخدمات أولاً");
+            return;
+        }
+
+        const total = Cart.items.reduce((acc, curr) => acc + curr.price, 0);
+        const waLink = `https://wa.me/967XXXXXXXXX?text=` + 
+            encodeURIComponent(`*عقد عمل جديد من: ${name}*\n\nالخدمات المطلوبة:\n${Cart.items.map(i => '- ' + i.title).join('\n')}\n\n*الإجمالي:* $${total}\n*التوثيق:* تم التوقيع رقمياً ✅`);
+        
+        UI.notify("جاري إنشاء العقد الرسمي...");
+        setTimeout(() => window.open(waLink, '_blank'), 1500);
+    }
+};
+
+// 6. UI Helpers
+const UI = {
+    renderServices() {
+        const container = document.getElementById('services-render');
+        container.innerHTML = DB.services.map(s => `
+            <div class="service-item">
+                <div class="icon-box"><i class="fa-solid ${s.icon} fa-2x"></i></div>
+                <h4>${s.title}</h4>
+                <div class="price-tag">$${s.price.toLocaleString()}</div>
+                <button class="primary-btn" onclick="Cart.add('${s.id}')" style="width:100%">حجز الخدمة</button>
             </div>
         `).join('');
+    },
+    
+    notify(msg) {
+        const wrapper = document.getElementById('toast-wrapper');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = msg;
+        wrapper.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
     }
+};
 
-    setupSignature() {
-        const canvas = document.getElementById('signature-canvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
-
-        const start = (e) => {
-            isDrawing = true;
-            ctx.beginPath();
-            const pos = this.getMousePos(canvas, e);
-            ctx.moveTo(pos.x, pos.y);
-        };
-
-        const draw = (e) => {
-            if (!isDrawing) return;
-            const pos = this.getMousePos(canvas, e);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.strokeStyle = '#06b6d4';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-        };
-
-        canvas.addEventListener('mousedown', start);
-        canvas.addEventListener('mousemove', draw);
-        window.addEventListener('mouseup', () => isDrawing = false);
-        
-        // Mobile Support
-        canvas.addEventListener('touchstart', start);
-        canvas.addEventListener('touchmove', draw);
-    }
-
-    getMousePos(canvas, evt) {
-        const rect = canvas.getBoundingClientRect();
-        const clientX = evt.clientX || evt.touches[0].clientX;
-        const clientY = evt.clientY || evt.touches[0].clientY;
-        return { x: clientX - rect.left, y: clientY - rect.top };
-    }
-
-    clearCanvas() {
-        const c = document.getElementById('signature-canvas');
-        c.getContext('2d').clearRect(0,0,c.width,c.height);
-    }
-
-    toast(msg) {
-        const t = document.getElementById('toast-notif');
-        t.textContent = msg; t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    finalizeOrder() {
-        const name = document.getElementById('client-name').value;
-        if(!name || this.cart.length === 0) return alert("يرجى ملء البيانات وإضافة خدمات للسلة");
-        
-        const total = this.cart.reduce((sum, i) => sum + i.price, 0);
-        const msg = `*طلب تعاقد رسمي - Omni-Task*%0A` +
-                    `👤 العميل: ${name}%0A` +
-                    `📦 الخدمات: ${this.cart.length}%0A` +
-                    `💰 الإجمالي: $${total}%0A` +
-                    `✅ تم التوقيع رقمياً والحالة: جاهز للتنفيذ.`;
-        
-        window.open(`https://wa.me/967XXXXXXXXX?text=${msg}`, '_blank');
-    }
-}
-
-const app = new OmniEliteApp();
+// 7. Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    UI.renderServices();
+    setTimeout(() => {
+        document.body.classList.remove('loading');
+        document.getElementById('loader').style.display = 'none';
+    }, 1000);
+});
