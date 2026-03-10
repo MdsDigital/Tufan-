@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Omni-Task - المنصة الرقمية المتكاملة للترجمة والتعريب وتطوير الويب">
+    <meta name="theme-color" content="#007bff">
+    <title>Omni-Task | المنصة الرقمية المتكاملة</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header" role="banner">
+            <button class="logo" aria-label="الصفحة الرئيسية" data-section="home">
+                <div class="logo-square" aria-hidden="true">O</div>
+                <span class="logo-text">OMNI-TASK</span>
+            </button>
+            
+            <nav class="nav" role="navigation" aria-label="القائمة الرئيسية">
+                <button class="nav-link" data-section="home">الرئيسية</button>
+                <button class="nav-link" data-section="services">إنشاء طلب</button>
+                <button class="nav-link" data-section="about">من نحن</button>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="cart-button" aria-label="سلة المشتريات" data-section="cart">
+                    <span aria-hidden="true">🛒</span>
+                    <span class="cart-count" id="cart-num" aria-label="عدد العناصر في السلة">0</span>
+                </button>
+                <button class="btn btn-primary user-btn" id="user-btn" aria-label="تسجيل الدخول">
+                    دخول
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="main-content" role="main">
+            <!-- Home Section -->
+            <section id="home" class="section active" role="region" aria-label="الصفحة الرئيسية">
+                <div class="hero">
+                    <h1>أهلاً بك في <span class="accent-text">عالم الإتقان</span></h1>
+                    <p class="hero-subtitle">المنصة العربية الأولى التي تجمع بين الترجمة الاحترافية، التعريب، وتطوير الأنظمة الرقمية بمعايير عالمية.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-large" data-section="services">
+                            ابدأ مشروعك الآن
+                        </button>
+                        <button class="btn btn-outline btn-large" data-section="about">
+                            من نحن؟
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">+500</span>
+                        <span class="stat-label">مشروع مكتمل</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">+50</span>
+                        <span class="stat-label">خبير ومتخصص</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">دعم فني</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="section" role="region" aria-label="الخدمات">
+                <div class="section-header">
+                    <h2>اختر الخدمة المناسبة لمشروعك</h2>
+                    <p class="section-subtitle">نقدم مجموعة متكاملة من الحلول الرقمية بجودة احترافية</p>
+                </div>
+                
+                <div class="services-grid" role="list">
+                    <!-- Service cards will be populated via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Cart Section -->
+            <section id="cart" class="section" role="region" aria-label="سلة المشتريات">
+                <div class="cart-container">
+                    <h2>سلة طلباتك</h2>
+                    <div id="cart-list" class="cart-list" role="list">
+                        <p class="empty-cart-message">السلة فارغة حالياً</p>
+                    </div>
+                    
+                    <div id="total-area" class="total-area hidden">
+                        <span>الإجمالي:</span>
+                        <span id="total-price" class="total-price">$0</span>
+                    </div>
+                    
+                    <button id="checkout-btn" class="btn btn-primary btn-large hidden" data-section="contract">
+                        متابعة لتوقيع العقد
+                    </button>
+                </div>
+            </section>
+
+            <!-- Contract Section -->
+            <section id="contract" class="section" role="region" aria-label="توقيع العقد">
+                <div class="contract-container">
+                    <h2>عقد تقديم خدمات رقمية</h2>
+                    
+                    <div class="contract-paper" role="document" tabindex="0" aria-label="نص العقد">
+                        <p><strong>أولاً:</strong> يلتزم الطرف الأول (Omni-Task) بتنفيذ الخدمات المذكورة في سلة المشتريات بجودة احترافية وفي الوقت المتفق عليه.</p>
+                        <p><strong>ثانياً:</strong> يقر الطرف الثاني (العميل) بأن كافة البيانات المقدمة صحيحة وكاملة.</p>
+                        <p><strong>ثالثاً:</strong> تؤول حقوق الملكية الفكرية للعميل بمجرد سداد كامل المستحقات.</p>
+                        <p><strong>رابعاً:</strong> يعتبر التوقيع الإلكتروني أدناه إقراراً بالبدء الرسمي في تنفيذ المشروع وموافقة على جميع البنود.</p>
+                    </div>
+                    
+                    <div class="signature-section">
+                        <label for="sig-pad" class="signature-label">وقع هنا إلكترونياً (باستخدام الماوس أو اللمس):</label>
+                        <div class="sig-canvas-wrapper">
+                            <canvas id="sig-pad" class="sig-canvas" width="600" height="200"></canvas>
+                        </div>
+                        
+                        <div class="signature-actions">
+                            <button class="btn btn-secondary" id="clear-sig" aria-label="مسح التوقيع">
+                                مسح
+                            </button>
+                            <button class="btn btn-primary" id="finish-project" aria-label="اعتماد العقد">
+                                اعتماد العقد والبدء بالمشروع
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section" role="region" aria-label="من نحن">
+                <div class="about-container">
+                    <h2>قصة Omni-Task</h2>
+                    <div class="about-content">
+                        <p>نحن فريق عالمي من المبدعين، المبرمجين، والمترجمين المحترفين. اجتمعنا لتقديم حلول رقمية تتجاوز التوقعات. نؤمن بأن الجودة هي لغة النجاح الوحيدة، ومن هنا جاءت تسميتنا (Omni-Task) لتعبر عن شمولية خدماتنا ودقتها.</p>
+                        
+                        <div class="values-grid">
+                            <div class="value-item">
+                                <span class="value-icon">🎯</span>
+                                <h3>التميز</h3>
+                                <p>نسعى دائماً لتقديم أفضل ما لدينا</p>
+                            </div>
+                            <div class="value-item">
+                                <span class="value-icon">🤝</span>
+                                <h3>الثقة</h3>
+                                <p>نبني علاقات طويلة الأمد مع عملائنا</p>
+                            </div>
+                            <div class="value-item">
+                                <span class="value-icon">🚀</span>
+                                <h3>الابتكار</h3>
+                                <p>نواكب أحدث التقنيات في مجالنا</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js" type="module"></script>
+</body>
+</html>
