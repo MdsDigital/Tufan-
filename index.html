@@ -2,103 +2,96 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Omni-Task Elite | المنصة المتكاملة</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni-Task Pro | الحل المتكامل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-theme">
-    <div id="loader" class="full-screen-loader">
-        <div class="spinner"></div>
-        <p>Omni-Task Elite</p>
+<body class="loading">
+
+    <div id="loader" class="loader-screen">
+        <div class="loader-core"></div>
     </div>
 
-    <nav class="main-nav">
-        <div class="nav-blur"></div>
-        <div class="nav-content">
-            <div class="logo" onclick="app.showPage('home')">
-                <div class="logo-box">O</div>
-                <span>OMNI<b>TASK</b></span>
+    <nav class="navbar" id="navbar">
+        <div class="container nav-box">
+            <div class="brand" onclick="Router.go('home')">
+                <div class="logo-symbol">OT</div>
+                <span>OmniTask <b>Pro</b></span>
             </div>
-            <ul class="nav-links">
-                <li onclick="app.showPage('home')" class="active" data-page="home"><i class="fas fa-home"></i></li>
-                <li onclick="app.showPage('services')" data-page="services"><i class="fas fa-th-large"></i></li>
-                <li onclick="app.showPage('portfolio')" data-page="portfolio"><i class="fas fa-briefcase"></i></li>
-                <li onclick="app.showPage('checkout')" data-page="checkout" class="cart-link">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-badge">0</span>
-                </li>
-            </ul>
+            <div class="nav-actions">
+                <div class="nav-links">
+                    <button onclick="Router.go('home')" class="active">الرئيسية</button>
+                    <button onclick="Router.go('services')">الخدمات</button>
+                    <button onclick="Router.go('portfolio')">الأعمال</button>
+                </div>
+                <div class="cart-trigger" onclick="Router.go('cart')">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-counter">0</span>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <main id="main-view">
-        <section id="home" class="page active">
-            <div class="hero-wrapper">
-                <div class="hero-text">
-                    <span class="badge-new">نسخة 2026 المحدثة</span>
-                    <h1>نحول أفكارك إلى <span class="gradient-text">واقع رقمي</span></h1>
-                    <p>المنصة الوحيدة التي تضمن لك الجودة، السرعة، والتعاقد الرسمي في مكان واحد.</p>
-                    <div class="hero-actions">
-                        <button class="btn-main" onclick="app.showPage('services')">تصفح الخدمات <i class="fas fa-arrow-left"></i></button>
-                        <div class="users-count"><i class="fas fa-users"></i> +1500 عميل سعيد</div>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="blob-bg"></div>
-                    <div class="floating-ui-card">
-                        <i class="fas fa-shield-halved"></i>
-                        <span>تعاقد آمن 100%</span>
-                    </div>
+    <main id="view-port">
+        <section id="home" class="view active">
+            <div class="hero-section">
+                <div class="hero-badge">موثوق من قبل +2000 شركة</div>
+                <h1>حول أعمالك إلى <br><span class="highlight">أنظمة ذكية</span></h1>
+                <p>نحن لا نقدم مجرد خدمات، نحن نصمم حلولاً تكنولوجية ترفع من كفاءة مشروعك وتضاعف أرباحك.</p>
+                <div class="hero-btns">
+                    <button class="primary-btn" onclick="Router.go('services')">ابدأ الآن <i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="secondary-btn">استشارة مجانية</button>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="page">
+        <section id="services" class="view">
             <div class="container">
-                <div class="section-head">
-                    <h2>خدماتنا النخبوية</h2>
-                    <div class="category-tabs" id="cat-tabs">
-                        <button class="tab active" onclick="app.filterServices('all')">الكل</button>
-                        <button class="tab" onclick="app.filterServices('برمجة')">برمجة</button>
-                        <button class="tab" onclick="app.filterServices('تصميم')">تصميم</button>
+                <div class="header-v2">
+                    <h2>استكشف تخصصاتنا</h2>
+                    <div class="filter-pills" id="category-filter">
+                        <button class="pill active" data-cat="all">الكل</button>
+                        <button class="pill" data-cat="dev">برمجة</button>
+                        <button class="pill" data-cat="design">تصميم</button>
                     </div>
                 </div>
-                <div class="grid" id="services-container"></div>
+                <div id="services-render" class="services-grid-pro"></div>
             </div>
         </section>
 
-        <section id="checkout" class="page">
-            <div class="checkout-grid">
-                <div class="order-info">
-                    <h3>ملخص الطلب</h3>
-                    <div id="cart-list" class="styled-list"></div>
-                    <div class="total-bar">
-                        <span>الإجمالي النهائى:</span>
-                        <span id="final-price">$0</span>
+        <section id="cart" class="view">
+            <div class="container checkout-container">
+                <div class="checkout-card">
+                    <div class="cart-details">
+                        <h3>سلة المشروعات</h3>
+                        <div id="cart-list-pro"></div>
+                        <div class="price-footer">
+                            <span>الإجمالي التقديري</span>
+                            <h2 id="grand-total">$0</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="contract-form">
-                    <h3>بيانات التعاقد</h3>
-                    <div class="input-group">
-                        <input type="text" id="client-name" placeholder="اسمك الكامل" required>
-                        <input type="email" id="client-email" placeholder="بريدك الإلكتروني" required>
+                    <div class="contract-side">
+                        <h3>نموذج التعاقد الذكي</h3>
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" id="user-name" placeholder="أدخل اسمك كما في الهوية">
+                        </div>
+                        <div class="signature-pad-container">
+                            <canvas id="pad"></canvas>
+                            <button class="clear-pad" onclick="Sign.clear()">مسح التوقيع</button>
+                        </div>
+                        <button class="submit-btn" onclick="Order.process()">
+                            <i class="fa-brands fa-whatsapp"></i> توثيق وإرسال للتعميد
+                        </button>
                     </div>
-                    <div class="signature-box">
-                        <label>التوقيع الإلكتروني</label>
-                        <canvas id="signature-canvas"></canvas>
-                        <button class="btn-clear" onclick="app.clearCanvas()">إعادة التوقيع</button>
-                    </div>
-                    <button class="btn-confirm" onclick="app.finalizeOrder()">
-                        <i class="fab fa-whatsapp"></i> اعتماد العقد وإرسال عبر واتساب
-                    </button>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="toast-notif"></div>
+    <div id="toast-wrapper"></div>
 
     <script src="script.js"></script>
 </body>
