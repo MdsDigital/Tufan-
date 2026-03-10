@@ -2,77 +2,104 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omni-Task | Future of Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Omni-Task Elite | المنصة المتكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="bg-glow"></div>
+<body class="dark-theme">
+    <div id="loader" class="full-screen-loader">
+        <div class="spinner"></div>
+        <p>Omni-Task Elite</p>
+    </div>
 
-    <header class="header">
-        <nav class="nav-container">
-            <div class="brand" onclick="app.navigate('home')">
-                <div class="brand-logo">O</div>
-                <div class="brand-name">OMNI<span>TASK</span></div>
+    <nav class="main-nav">
+        <div class="nav-blur"></div>
+        <div class="nav-content">
+            <div class="logo" onclick="app.showPage('home')">
+                <div class="logo-box">O</div>
+                <span>OMNI<b>TASK</b></span>
             </div>
-            
-            <ul class="nav-menu">
-                <li onclick="app.navigate('home')"><i class="fas fa-home"></i></li>
-                <li onclick="app.navigate('services')"><i class="fas fa-layer-group"></i></li>
-                <li onclick="app.navigate('cart')"><i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span></li>
+            <ul class="nav-links">
+                <li onclick="app.showPage('home')" class="active" data-page="home"><i class="fas fa-home"></i></li>
+                <li onclick="app.showPage('services')" data-page="services"><i class="fas fa-th-large"></i></li>
+                <li onclick="app.showPage('portfolio')" data-page="portfolio"><i class="fas fa-briefcase"></i></li>
+                <li onclick="app.showPage('checkout')" data-page="checkout" class="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge">0</span>
+                </li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main id="app-root">
+    <main id="main-view">
         <section id="home" class="page active">
-            <div class="hero-glass">
-                <h1>نصمم <span class="text-glow">المستقبل</span> بنقرة واحدة</h1>
-                <p>المنصة الأولى التي تجمع بين ذكاء الآلة وإبداع البشر لتقديم خدمات نخبويّة.</p>
-                <div class="cta-group">
-                    <button class="btn-glow" onclick="app.navigate('services')">اكتشف الخدمات</button>
-                    <button class="btn-outline" onclick="app.navigate('portfolio')">أعمالنا</button>
+            <div class="hero-wrapper">
+                <div class="hero-text">
+                    <span class="badge-new">نسخة 2026 المحدثة</span>
+                    <h1>نحول أفكارك إلى <span class="gradient-text">واقع رقمي</span></h1>
+                    <p>المنصة الوحيدة التي تضمن لك الجودة، السرعة، والتعاقد الرسمي في مكان واحد.</p>
+                    <div class="hero-actions">
+                        <button class="btn-main" onclick="app.showPage('services')">تصفح الخدمات <i class="fas fa-arrow-left"></i></button>
+                        <div class="users-count"><i class="fas fa-users"></i> +1500 عميل سعيد</div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="blob-bg"></div>
+                    <div class="floating-ui-card">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>تعاقد آمن 100%</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="services" class="page">
-            <div class="section-header">
-                <h2>مصفوفة الخدمات</h2>
-                <div class="filter-bar" id="filters"></div>
+            <div class="container">
+                <div class="section-head">
+                    <h2>خدماتنا النخبوية</h2>
+                    <div class="category-tabs" id="cat-tabs">
+                        <button class="tab active" onclick="app.filterServices('all')">الكل</button>
+                        <button class="tab" onclick="app.filterServices('برمجة')">برمجة</button>
+                        <button class="tab" onclick="app.filterServices('تصميم')">تصميم</button>
+                    </div>
+                </div>
+                <div class="grid" id="services-container"></div>
             </div>
-            <div class="grid-layout" id="services-grid"></div>
         </section>
 
-        <section id="cart" class="page">
-            <div class="checkout-wrapper">
-                <div class="glass-card cart-details">
-                    <h3>حقيبة الطلبات</h3>
-                    <div id="cart-items"></div>
+        <section id="checkout" class="page">
+            <div class="checkout-grid">
+                <div class="order-info">
+                    <h3>ملخص الطلب</h3>
+                    <div id="cart-list" class="styled-list"></div>
+                    <div class="total-bar">
+                        <span>الإجمالي النهائى:</span>
+                        <span id="final-price">$0</span>
+                    </div>
                 </div>
-                <div class="glass-card checkout-action">
-                    <h3>إتمام التعاقد</h3>
-                    <div class="signature-area">
-                        <canvas id="signature-pad"></canvas>
-                        <div class="sig-tools">
-                            <button onclick="app.clearSignature()">مسح</button>
-                        </div>
+                <div class="contract-form">
+                    <h3>بيانات التعاقد</h3>
+                    <div class="input-group">
+                        <input type="text" id="client-name" placeholder="اسمك الكامل" required>
+                        <input type="email" id="client-email" placeholder="بريدك الإلكتروني" required>
                     </div>
-                    <div class="price-summary">
-                        <span>الإجمالي:</span>
-                        <h2 id="total-price">$0</h2>
+                    <div class="signature-box">
+                        <label>التوقيع الإلكتروني</label>
+                        <canvas id="signature-canvas"></canvas>
+                        <button class="btn-clear" onclick="app.clearCanvas()">إعادة التوقيع</button>
                     </div>
-                    <button class="btn-glow full-width" onclick="app.confirmOrder()">
-                        <i class="fab fa-whatsapp"></i> توقيع وإرسال للعميد
+                    <button class="btn-confirm" onclick="app.finalizeOrder()">
+                        <i class="fab fa-whatsapp"></i> اعتماد العقد وإرسال عبر واتساب
                     </button>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="notifications"></div>
+    <div id="toast-notif"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
